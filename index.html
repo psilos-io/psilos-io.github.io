@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Psilos</title>
+<meta name="description" content="A planetary-scale sensing network for everything beneath the ground.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;1,400;1,500&family=IBM+Plex+Mono:wght@300;400&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #080D0A;
+    --fg: #E8EFE9;
+    --muted: #6B7A6F;
+    --accent: #5DCAA5;
+    --accent-deep: #1D9E75;
+  }
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  html, body {
+    height: 100%;
+    background: var(--bg);
+    color: var(--fg);
+    font-family: 'IBM Plex Mono', monospace;
+    overflow: hidden;
+  }
+  body {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 2rem;
+    text-align: center;
+    position: relative;
+  }
+  .grid {
+    position: fixed;
+    inset: 0;
+    background-image:
+      linear-gradient(rgba(29,158,117,0.07) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(29,158,117,0.07) 1px, transparent 1px);
+    background-size: 48px 48px;
+    pointer-events: none;
+    mask-image: radial-gradient(circle at center, black 25%, transparent 75%);
+    -webkit-mask-image: radial-gradient(circle at center, black 25%, transparent 75%);
+  }
+  .mark {
+    font-family: 'Cormorant Garamond', serif;
+    font-style: italic;
+    font-weight: 500;
+    font-size: clamp(4rem, 14vw, 9rem);
+    letter-spacing: -0.02em;
+    line-height: 1;
+    margin-bottom: 1.5rem;
+    position: relative;
+    z-index: 1;
+  }
+  .mark .dot { color: var(--accent); }
+  .tag {
+    font-size: 0.7rem;
+    text-transform: uppercase;
+    letter-spacing: 0.3em;
+    color: var(--muted);
+    margin-bottom: 3rem;
+    position: relative;
+    z-index: 1;
+  }
+  .copy {
+    font-family: 'Cormorant Garamond', serif;
+    font-style: italic;
+    font-size: clamp(1.1rem, 2vw, 1.4rem);
+    color: var(--fg);
+    max-width: 38rem;
+    line-height: 1.5;
+    margin-bottom: 3rem;
+    opacity: 0.85;
+    position: relative;
+    z-index: 1;
+  }
+  .meta {
+    font-size: 0.65rem;
+    text-transform: uppercase;
+    letter-spacing: 0.25em;
+    color: var(--muted);
+    position: relative;
+    z-index: 1;
+  }
+  .meta a {
+    color: var(--accent);
+    text-decoration: none;
+    border-bottom: 1px solid rgba(93,202,165,0.3);
+    transition: border-color 0.2s;
+  }
+  .meta a:hover { border-color: var(--accent); }
+  .pulse {
+    display: inline-block;
+    width: 7px;
+    height: 7px;
+    border-radius: 50%;
+    background: var(--accent);
+    margin-right: 0.7rem;
+    vertical-align: middle;
+    animation: pulse 2s ease-in-out infinite;
+  }
+  @keyframes pulse {
+    0%, 100% { opacity: 1; box-shadow: 0 0 0 0 rgba(93,202,165,0.5); }
+    50% { opacity: 0.6; box-shadow: 0 0 0 10px rgba(93,202,165,0); }
+  }
+</style>
+</head>
+<body>
+  <div class="grid"></div>
+  <div class="mark">psilos<span class="dot">.</span></div>
+  <div class="tag"><span class="pulse"></span>Subsurface intelligence</div>
+  <p class="copy">A planetary-scale sensing network for everything beneath the ground &mdash; minerals, water, infrastructure, energy.</p>
+  <div class="meta">Coming 2026 &nbsp;&middot;&nbsp; <a href="mailto:hello@psilos.io">hello@psilos.io</a></div>
+</body>
+</html>
