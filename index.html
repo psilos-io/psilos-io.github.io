@@ -60,15 +60,14 @@
     margin-bottom: 1.5rem;
     filter: drop-shadow(0 0 32px rgba(8, 13, 10, 0.85));
   }
-  .copy {
-    font-family: 'Cormorant Garamond', serif;
-    font-style: italic;
-    font-size: clamp(1rem, 1.5vw, 1.25rem);
-    color: var(--fg);
-    max-width: 36rem;
-    line-height: 1.55;
-    opacity: 0.78;
+  .tagline {
+    font-family: 'IBM Plex Mono', monospace;
+    font-weight: 500;
+    font-size: clamp(0.7rem, 1vw, 0.85rem);
+    letter-spacing: 0.25em;
+    color: rgba(93, 202, 165, 0.72);
     text-shadow: 0 0 20px rgba(5,8,5,0.9);
+    margin-top: 0.25rem;
   }
   .footer {
     position: fixed;
@@ -131,7 +130,7 @@
     <text x="340" y="465" text-anchor="middle" font-family="'Cormorant Garamond',Georgia,serif" font-size="78" font-weight="400" font-style="italic" letter-spacing="5" fill="#1D9E75">psilos</text>
     <text x="340" y="530" text-anchor="middle" font-family="'IBM Plex Mono',monospace" font-size="24" font-weight="400" letter-spacing="6" fill="#5DCAA5" opacity="0.65">spatial intelligence</text>
   </svg>
-  <p class="copy">A planetary-scale sensing network for everything beneath the ground.</p>
+  <p class="tagline">the world's silos &nbsp;|&nbsp; our network</p>
 </div>
 <div class="footer"><span class="pulse"></span>Coming 2026 &nbsp;&middot;&nbsp; <a href="mailto:hello@psilos.io">hello@psilos.io</a></div>
 <script>
@@ -221,26 +220,6 @@
       }
     }
     ctx.putImageData(idata, 0, 0);
-
-    // Concentric ripple sweeps emanating from the source
-    ctx.save();
-    ctx.globalCompositeOperation = 'screen';
-    const maxR = Math.max(RW, RH) * 0.95;
-    for (let i = 0; i < 6; i++) {
-      const age = (t * speed * 0.28 + i / 6) % 1;
-      const r = age * maxR;
-      const alpha = (1 - age) * (1 - age) * 0.18 * intensity;
-      const g = ctx.createRadialGradient(srcX, srcY, r * 0.85, srcX, srcY, r);
-      g.addColorStop(0, 'rgba(93,202,165,0)');
-      g.addColorStop(0.5, 'rgba(93,202,165,' + alpha.toFixed(3) + ')');
-      g.addColorStop(1, 'rgba(93,202,165,0)');
-      ctx.strokeStyle = g;
-      ctx.lineWidth = 1.6;
-      ctx.beginPath();
-      ctx.arc(srcX, srcY, r, 0, TAU);
-      ctx.stroke();
-    }
-    ctx.restore();
   }
 
   let running = true;
