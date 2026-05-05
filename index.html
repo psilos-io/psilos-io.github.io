@@ -7,10 +7,10 @@
 <meta name="description" content="A planetary-scale sensing network for everything beneath the ground.">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;1,400;1,500&family=IBM+Plex+Mono:wght@300;400&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;1,400;1,500&family=IBM+Plex+Mono:wght@300;400;500&display=swap" rel="stylesheet">
 <style>
   :root {
-    --bg: #080D0A;
+    --bg: #050805;
     --fg: #E8EFE9;
     --muted: #6B7A6F;
     --accent: #5DCAA5;
@@ -18,101 +18,288 @@
   }
   * { margin: 0; padding: 0; box-sizing: border-box; }
   html, body {
+    width: 100%;
     height: 100%;
     background: var(--bg);
     color: var(--fg);
     font-family: 'IBM Plex Mono', monospace;
     overflow: hidden;
   }
-  body {
+  #cv {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 1;
+    display: block;
+  }
+  .vignette {
+    position: fixed;
+    inset: 0;
+    z-index: 2;
+    pointer-events: none;
+    background: radial-gradient(ellipse at center, transparent 0%, transparent 40%, rgba(5,8,5,0.55) 90%);
+  }
+  .content {
+    position: relative;
+    z-index: 3;
     display: flex;
     flex-direction: column;
     align-items: center;
     justify-content: center;
+    width: 100%;
+    height: 100vh;
+    height: 100dvh;
     padding: 2rem;
     text-align: center;
-    position: relative;
-  }
-  .grid {
-    position: fixed;
-    inset: 0;
-    background-image:
-      linear-gradient(rgba(29,158,117,0.07) 1px, transparent 1px),
-      linear-gradient(90deg, rgba(29,158,117,0.07) 1px, transparent 1px);
-    background-size: 48px 48px;
     pointer-events: none;
-    mask-image: radial-gradient(circle at center, black 25%, transparent 75%);
-    -webkit-mask-image: radial-gradient(circle at center, black 25%, transparent 75%);
   }
-  .mark {
-    font-family: 'Cormorant Garamond', serif;
-    font-style: italic;
-    font-weight: 500;
-    font-size: clamp(4rem, 14vw, 9rem);
-    letter-spacing: -0.02em;
-    line-height: 1;
+  .logo {
+    width: clamp(280px, 38vw, 480px);
     margin-bottom: 1.5rem;
-    position: relative;
-    z-index: 1;
-  }
-  .mark .dot { color: var(--accent); }
-  .tag {
-    font-size: 0.7rem;
-    text-transform: uppercase;
-    letter-spacing: 0.3em;
-    color: var(--muted);
-    margin-bottom: 3rem;
-    position: relative;
-    z-index: 1;
+    filter: drop-shadow(0 0 32px rgba(8, 13, 10, 0.85));
   }
   .copy {
     font-family: 'Cormorant Garamond', serif;
     font-style: italic;
-    font-size: clamp(1.1rem, 2vw, 1.4rem);
+    font-size: clamp(1rem, 1.5vw, 1.25rem);
     color: var(--fg);
-    max-width: 38rem;
-    line-height: 1.5;
-    margin-bottom: 3rem;
-    opacity: 0.85;
-    position: relative;
-    z-index: 1;
+    max-width: 36rem;
+    line-height: 1.55;
+    opacity: 0.78;
+    text-shadow: 0 0 20px rgba(5,8,5,0.9);
   }
-  .meta {
+  .footer {
+    position: fixed;
+    bottom: 1.6rem;
+    left: 0;
+    right: 0;
+    text-align: center;
+    font-family: 'IBM Plex Mono', monospace;
     font-size: 0.65rem;
+    letter-spacing: 0.3em;
     text-transform: uppercase;
-    letter-spacing: 0.25em;
-    color: var(--muted);
-    position: relative;
-    z-index: 1;
+    color: rgba(93,202,165,0.5);
+    z-index: 4;
   }
-  .meta a {
-    color: var(--accent);
+  .footer a {
+    color: rgba(93,202,165,0.78);
     text-decoration: none;
-    border-bottom: 1px solid rgba(93,202,165,0.3);
-    transition: border-color 0.2s;
+    border-bottom: 1px solid rgba(93,202,165,0.25);
+    transition: border-color 0.2s, color 0.2s;
+    pointer-events: auto;
   }
-  .meta a:hover { border-color: var(--accent); }
+  .footer a:hover {
+    color: var(--accent);
+    border-color: var(--accent);
+  }
   .pulse {
     display: inline-block;
-    width: 7px;
-    height: 7px;
+    width: 6px;
+    height: 6px;
     border-radius: 50%;
     background: var(--accent);
     margin-right: 0.7rem;
     vertical-align: middle;
-    animation: pulse 2s ease-in-out infinite;
+    animation: pulse 2.4s ease-in-out infinite;
   }
   @keyframes pulse {
     0%, 100% { opacity: 1; box-shadow: 0 0 0 0 rgba(93,202,165,0.5); }
-    50% { opacity: 0.6; box-shadow: 0 0 0 10px rgba(93,202,165,0); }
+    50% { opacity: 0.55; box-shadow: 0 0 0 9px rgba(93,202,165,0); }
   }
 </style>
 </head>
 <body>
-  <div class="grid"></div>
-  <div class="mark">psilos<span class="dot">.</span></div>
-  <div class="tag"><span class="pulse"></span>Subsurface intelligence</div>
-  <p class="copy">A planetary-scale sensing network for everything beneath the ground &mdash; minerals, water, infrastructure, energy.</p>
-  <div class="meta">Coming 2026 &nbsp;&middot;&nbsp; <a href="mailto:hello@psilos.io">hello@psilos.io</a></div>
+<canvas id="cv"></canvas>
+<div class="vignette"></div>
+<div class="content">
+  <svg class="logo" viewBox="0 0 680 572" xmlns="http://www.w3.org/2000/svg">
+    <g transform="translate(340,232)">
+      <line x1="-115" y1="-83" x2="0" y2="-149" stroke="#ffffff" stroke-width="2.5" stroke-linecap="round" opacity="0.15"/>
+      <line x1="115" y1="-83" x2="0" y2="-149" stroke="#ffffff" stroke-width="2.5" stroke-linecap="round" opacity="0.15"/>
+      <path d="M-115,-83 L0,-25.5 L115,-83" fill="none" stroke="#085041" stroke-width="4.1" stroke-linecap="round" stroke-linejoin="round" opacity="0.5"/>
+      <path d="M-97,-51 L0,0 L97,-51" fill="none" stroke="#0F6E56" stroke-width="4.1" stroke-linecap="round" stroke-linejoin="round" opacity="0.6"/>
+      <path d="M-79,-19 L0,25.5 L79,-19" fill="none" stroke="#1D9E75" stroke-width="4.1" stroke-linecap="round" stroke-linejoin="round" opacity="0.75"/>
+      <path d="M-61,12.75 L0,51 L61,12.75" fill="none" stroke="#1D9E75" stroke-width="4.1" stroke-linecap="round" stroke-linejoin="round" opacity="0.9"/>
+      <path d="M-43,40.8 L0,71.4 L43,40.8" fill="none" stroke="#5DCAA5" stroke-width="3.6" stroke-linecap="round" stroke-linejoin="round" opacity="0.8"/>
+      <circle cx="0" cy="92" r="6.4" fill="#1D9E75"/>
+      <circle cx="0" cy="92" r="14" fill="none" stroke="#ffffff" stroke-width="1" opacity="0.15"/>
+      <circle cx="0" cy="-149" r="9" fill="#080D0A"/>
+      <circle cx="0" cy="-149" r="6.4" fill="#5DCAA5"/>
+    </g>
+    <text x="340" y="465" text-anchor="middle" font-family="'Cormorant Garamond',Georgia,serif" font-size="78" font-weight="400" font-style="italic" letter-spacing="5" fill="#1D9E75">psilos</text>
+    <text x="340" y="530" text-anchor="middle" font-family="'IBM Plex Mono',monospace" font-size="24" font-weight="400" letter-spacing="6" fill="#5DCAA5" opacity="0.65">spatial intelligence</text>
+  </svg>
+  <p class="copy">A planetary-scale sensing network for everything beneath the ground.</p>
+</div>
+<div class="footer"><span class="pulse"></span>Coming 2026 &nbsp;&middot;&nbsp; <a href="mailto:hello@psilos.io">hello@psilos.io</a></div>
+<script>
+(function () {
+  const cv = document.getElementById('cv');
+  const ctx = cv.getContext('2d', { alpha: true });
+  const TAU = Math.PI * 2;
+
+  // Internal render resolution — scaled up by CSS to viewport size.
+  // Keeping this lower preserves perf; the EMF field is smooth so up-scaling looks fine.
+  const isMobile = window.matchMedia('(max-width: 768px)').matches;
+  const RW = isMobile ? 320 : 540;
+  let RH = 360;
+  let W = window.innerWidth, H = window.innerHeight;
+
+  let mx = W * 0.5, my = H * 0.4;     // mouse target (window px)
+  let smx = mx, smy = my;              // smoothed source position
+  let lastInput = 0;
+  let driftPh = Math.random() * TAU;
+  let t = 0;
+
+  const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+  function resize() {
+    W = window.innerWidth;
+    H = window.innerHeight;
+    RH = Math.max(180, Math.round(RW * (H / W)));
+    cv.width = RW;
+    cv.height = RH;
+    cv.style.width = W + 'px';
+    cv.style.height = H + 'px';
+  }
+  window.addEventListener('resize', resize);
+  resize();
+
+  function drawEMF(nx, ny, intensity) {
+    ctx.clearRect(0, 0, RW, RH);
+    if (intensity < 0.02) return;
+
+    const srcX = RW / 2 + nx * (RW * 0.45);
+    const srcY = RH / 2 + ny * (RH * 0.45);
+    const speed = 0.4, bf = 0.038;
+
+    const sources = [
+      { x: srcX,           y: srcY,           f: bf,        ph: 0,         amp: 1.00, dc: 0.04  },
+      { x: RW * 0.5 + nx*60, y: RH * 0.22 - ny*30, f: bf*1.37, ph: TAU/3,   amp: 0.62, dc: 0.04  },
+      { x: RW * 0.5 + nx*40, y: RH * 0.78 + ny*25, f: bf*0.71, ph: TAU*2/3, amp: 0.50, dc: 0.04  },
+      { x: -srcX,          y: srcY,           f: bf*0.96,  ph: TAU*0.11, amp: 0.28, dc: 0.016 },
+      { x: 2*RW - srcX,    y: srcY,           f: bf*0.96,  ph: TAU*0.11, amp: 0.28, dc: 0.016 },
+      { x: srcX,           y: -srcY,          f: bf*1.05,  ph: TAU*0.17, amp: 0.24, dc: 0.016 },
+      { x: srcX,           y: 2*RH - srcY,    f: bf*1.05,  ph: TAU*0.17, amp: 0.24, dc: 0.016 }
+    ];
+
+    const idata = ctx.createImageData(RW, RH);
+    const d = idata.data;
+    const stride = RW * 4;
+
+    for (let py = 0; py < RH; py += 2) {
+      for (let px = 0; px < RW; px += 2) {
+        let field = 0;
+        for (let s = 0; s < 7; s++) {
+          const src = sources[s];
+          const dx = px - src.x;
+          const dy = py - src.y;
+          const r = Math.sqrt(dx * dx + dy * dy) + 0.001;
+          field += Math.sin(r * src.f - t * speed + src.ph) / Math.sqrt(r * src.dc + 1) * src.amp;
+        }
+        field /= 2.6;
+        const a = Math.abs(field);
+        const pos = field > 0;
+        let rv = pos ? a * 33 * intensity : a * 7 * intensity;
+        let gv = pos ? a * 190 * intensity : a * 72 * intensity;
+        let bv = pos ? a * 130 * intensity : a * 95 * intensity;
+        const bright = Math.pow(a, 1.3) * 240 * intensity;
+        rv = Math.min(255, rv + bright * 0.18);
+        gv = Math.min(255, gv + bright * 0.82);
+        bv = Math.min(255, bv + bright * 0.6);
+        const aa = Math.min(255, a * 200 * intensity);
+        const idx = (py * RW + px) * 4;
+        const i0 = idx, i1 = idx + 4, i2 = idx + stride, i3 = idx + stride + 4;
+        if (i3 + 3 < d.length) {
+          d[i0] = rv; d[i0+1] = gv; d[i0+2] = bv; d[i0+3] = aa;
+          d[i1] = rv; d[i1+1] = gv; d[i1+2] = bv; d[i1+3] = aa;
+          d[i2] = rv; d[i2+1] = gv; d[i2+2] = bv; d[i2+3] = aa;
+          d[i3] = rv; d[i3+1] = gv; d[i3+2] = bv; d[i3+3] = aa;
+        }
+      }
+    }
+    ctx.putImageData(idata, 0, 0);
+
+    // Concentric ripple sweeps emanating from the source
+    ctx.save();
+    ctx.globalCompositeOperation = 'screen';
+    const maxR = Math.max(RW, RH) * 0.95;
+    for (let i = 0; i < 6; i++) {
+      const age = (t * speed * 0.28 + i / 6) % 1;
+      const r = age * maxR;
+      const alpha = (1 - age) * (1 - age) * 0.18 * intensity;
+      const g = ctx.createRadialGradient(srcX, srcY, r * 0.85, srcX, srcY, r);
+      g.addColorStop(0, 'rgba(93,202,165,0)');
+      g.addColorStop(0.5, 'rgba(93,202,165,' + alpha.toFixed(3) + ')');
+      g.addColorStop(1, 'rgba(93,202,165,0)');
+      ctx.strokeStyle = g;
+      ctx.lineWidth = 1.6;
+      ctx.beginPath();
+      ctx.arc(srcX, srcY, r, 0, TAU);
+      ctx.stroke();
+    }
+    ctx.restore();
+  }
+
+  let running = true;
+  document.addEventListener('visibilitychange', () => {
+    running = !document.hidden;
+    if (running) loop();
+  });
+
+  function loop() {
+    if (!running) return;
+    const now = performance.now();
+    const idle = now - lastInput > 1500;
+
+    let targetX, targetY;
+    if (idle) {
+      driftPh += reducedMotion ? 0.001 : 0.0035;
+      targetX = W * 0.5 + Math.sin(driftPh * 1.4) * W * 0.32;
+      targetY = H * 0.5 + Math.cos(driftPh) * H * 0.28;
+    } else {
+      targetX = mx;
+      targetY = my;
+    }
+
+    const ease = reducedMotion ? 0.02 : 0.05;
+    smx += (targetX - smx) * ease;
+    smy += (targetY - smy) * ease;
+
+    // Normalize to [-1, 1] across viewport
+    const nx = (smx - W / 2) / (W / 2);
+    const ny = (smy - H / 2) / (H / 2);
+
+    if (!reducedMotion) t += 0.016;
+    drawEMF(nx, ny, 0.85);
+    requestAnimationFrame(loop);
+  }
+  loop();
+
+  window.addEventListener('mousemove', e => {
+    mx = e.clientX;
+    my = e.clientY;
+    lastInput = performance.now();
+  }, { passive: true });
+
+  window.addEventListener('touchmove', e => {
+    if (e.touches && e.touches[0]) {
+      mx = e.touches[0].clientX;
+      my = e.touches[0].clientY;
+      lastInput = performance.now();
+    }
+  }, { passive: true });
+
+  window.addEventListener('touchstart', e => {
+    if (e.touches && e.touches[0]) {
+      mx = e.touches[0].clientX;
+      my = e.touches[0].clientY;
+      lastInput = performance.now();
+    }
+  }, { passive: true });
+})();
+</script>
 </body>
 </html>
