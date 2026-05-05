@@ -4,10 +4,17 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Psilos</title>
-<meta name="description" content="A planetary-scale sensing network for everything beneath the ground.">
+<meta name="description" content="the world's silos | our network">
+<meta property="og:title" content="Psilos">
+<meta property="og:description" content="the world's silos | our network">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://psilos.io">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Psilos">
+<meta name="twitter:description" content="the world's silos | our network">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;1,400;1,500&family=IBM+Plex+Mono:wght@300;400;500&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;1,400;1,500&family=Special+Elite&display=swap" rel="stylesheet">
 <style>
   :root {
     --bg: #050805;
@@ -22,7 +29,7 @@
     height: 100%;
     background: var(--bg);
     color: var(--fg);
-    font-family: 'IBM Plex Mono', monospace;
+    font-family: 'Special Elite', 'Courier New', monospace;
     overflow: hidden;
   }
   #cv {
@@ -61,13 +68,12 @@
     filter: drop-shadow(0 0 32px rgba(8, 13, 10, 0.85));
   }
   .tagline {
-    font-family: 'IBM Plex Mono', monospace;
-    font-weight: 500;
-    font-size: clamp(0.7rem, 1vw, 0.85rem);
-    letter-spacing: 0.25em;
-    color: rgba(93, 202, 165, 0.72);
+    font-family: 'Special Elite', 'Courier New', monospace;
+    font-size: clamp(0.78rem, 1.05vw, 0.95rem);
+    letter-spacing: 0.12em;
+    color: rgba(205, 215, 210, 0.82);
     text-shadow: 0 0 20px rgba(5,8,5,0.9);
-    margin-top: 0.25rem;
+    margin-top: 0.4rem;
   }
   .footer {
     position: fixed;
@@ -75,11 +81,10 @@
     left: 0;
     right: 0;
     text-align: center;
-    font-family: 'IBM Plex Mono', monospace;
-    font-size: 0.65rem;
-    letter-spacing: 0.3em;
-    text-transform: uppercase;
-    color: rgba(93,202,165,0.5);
+    font-family: 'Special Elite', 'Courier New', monospace;
+    font-size: 0.78rem;
+    letter-spacing: 0.16em;
+    color: rgba(205, 215, 210, 0.6);
     z-index: 4;
   }
   .footer a {
@@ -94,18 +99,75 @@
     border-color: var(--accent);
   }
   .pulse {
+    position: relative;
     display: inline-block;
-    width: 6px;
-    height: 6px;
-    border-radius: 50%;
-    background: var(--accent);
-    margin-right: 0.7rem;
+    width: 28px;
+    height: 28px;
+    margin-right: 0.6rem;
     vertical-align: middle;
-    animation: pulse 2.4s ease-in-out infinite;
+    isolation: isolate;
   }
-  @keyframes pulse {
-    0%, 100% { opacity: 1; box-shadow: 0 0 0 0 rgba(93,202,165,0.5); }
-    50% { opacity: 0.55; box-shadow: 0 0 0 9px rgba(93,202,165,0); }
+  .pulse .dot,
+  .pulse .ring {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    border-radius: 50%;
+    pointer-events: none;
+    will-change: transform, opacity;
+    mix-blend-mode: screen;
+  }
+  .pulse .dot {
+    width: 7px;
+    height: 7px;
+    background: radial-gradient(circle, rgba(220,255,235,0.95) 0%, rgba(93,202,165,0.85) 35%, rgba(29,158,117,0.4) 70%, rgba(29,158,117,0) 100%);
+    filter: blur(0.6px);
+    box-shadow:
+      0 0 8px rgba(93,202,165,0.55),
+      0 0 18px rgba(93,202,165,0.3),
+      0 0 32px rgba(29,158,117,0.18);
+    transform: translate(-50%, -50%);
+    animation: dotBreathe 5s ease-in-out infinite;
+  }
+  .pulse .ring {
+    width: 9px;
+    height: 9px;
+    background: radial-gradient(circle, rgba(93,202,165,0) 28%, rgba(93,202,165,0.42) 58%, rgba(93,202,165,0.12) 82%, rgba(93,202,165,0) 100%);
+    filter: blur(2.2px);
+    transform: translate(-50%, -50%) scale(0.4);
+    opacity: 0;
+    animation: ringExpand 8s cubic-bezier(0.22, 1, 0.36, 1) infinite;
+  }
+  .pulse .ring.r2 { animation-delay: 3s; }
+  .pulse .ring.r3 { animation-delay: 5s; }
+  @keyframes dotBreathe {
+    0%, 100% {
+      transform: translate(-50%, -50%) scale(1);
+      opacity: 0.78;
+    }
+    50% {
+      transform: translate(-50%, -50%) scale(1.18);
+      opacity: 1;
+    }
+  }
+  @keyframes ringExpand {
+    0% {
+      transform: translate(-50%, -50%) scale(0.4);
+      opacity: 0;
+    }
+    18% {
+      opacity: 0.65;
+    }
+    100% {
+      transform: translate(-50%, -50%) scale(4.2);
+      opacity: 0;
+    }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .pulse .dot { animation-duration: 13s; }
+    .pulse .ring { animation-duration: 21s; }
+    .pulse .ring.r2 { animation-delay: 8s; }
+    .pulse .ring.r3 { animation-delay: 13s; }
   }
 </style>
 </head>
@@ -128,11 +190,11 @@
       <circle cx="0" cy="-149" r="6.4" fill="#5DCAA5"/>
     </g>
     <text x="340" y="465" text-anchor="middle" font-family="'Cormorant Garamond',Georgia,serif" font-size="78" font-weight="400" font-style="italic" letter-spacing="5" fill="#1D9E75">psilos</text>
-    <text x="340" y="530" text-anchor="middle" font-family="'IBM Plex Mono',monospace" font-size="24" font-weight="400" letter-spacing="6" fill="#5DCAA5" opacity="0.65">spatial intelligence</text>
+    <text x="340" y="530" text-anchor="middle" font-family="'Special Elite','Courier New',monospace" font-size="26" letter-spacing="3" fill="#5DCAA5" opacity="0.7">spatial intelligence</text>
   </svg>
   <p class="tagline">the world's silos &nbsp;|&nbsp; our network</p>
 </div>
-<div class="footer"><span class="pulse"></span>Coming 2026 &nbsp;&middot;&nbsp; <a href="mailto:hello@psilos.io">hello@psilos.io</a></div>
+<div class="footer"><span class="pulse"><span class="ring r1"></span><span class="ring r2"></span><span class="ring r3"></span><span class="dot"></span></span>coming 06/26 &nbsp;&middot;&nbsp; <a href="mailto:hello@psilos.io">hello@psilos.io</a></div>
 <script>
 (function () {
   const cv = document.getElementById('cv');
