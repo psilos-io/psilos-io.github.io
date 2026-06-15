@@ -215,14 +215,14 @@
   /* ── moon ── */
   .moon {
     position: fixed;
-    top: 1rem;
-    right: 1rem;
-    width: clamp(240px, 30vw, 400px);
+    top: 2rem;
+    right: 2rem;
+    width: 300px;
     height: auto;
-    opacity: 0.38;
+    opacity: 0.7;
     pointer-events: none;
-    z-index: 3;
-    filter: drop-shadow(0 0 40px rgba(232,239,233,0.12));
+    z-index: 999;
+    filter: drop-shadow(0 0 40px rgba(232,239,233,0.2));
   }
 
   /* ── mobile tweaks ── */
@@ -240,7 +240,7 @@
 <body>
 <canvas id="cv"></canvas>
 <div class="vignette"></div>
-<img src="/moon.png" alt="" class="moon" loading="eager">
+<img src="/moon.png?v=2" alt="" class="moon" loading="eager">
 
 <nav>
   <a href="/" class="wordmark">psilos</a>
