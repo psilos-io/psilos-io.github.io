@@ -242,7 +242,10 @@
     opacity: 0;
     filter: hue-rotate(90deg) saturate(3) brightness(1.2) drop-shadow(0 0 20px rgba(29,158,117,0.3));
     mix-blend-mode: lighten;
-    animation: topoFade 8s ease-in-out infinite;
+    transition: opacity 0.6s ease;
+  }
+  .moon-stack:hover .moon-topo {
+    opacity: 0.22;
   }
 
   /* Layer 3: high-contrast edge scan */
@@ -250,7 +253,10 @@
     opacity: 0;
     filter: hue-rotate(120deg) saturate(5) contrast(2.5) brightness(0.8);
     mix-blend-mode: screen;
-    animation: scanFade 8s ease-in-out 2.5s infinite;
+    transition: opacity 0.8s ease 0.15s;
+  }
+  .moon-stack:hover .moon-scan {
+    opacity: 0.14;
   }
 
   /* Layer 4: grid overlay */
@@ -260,48 +266,15 @@
     background:
       repeating-linear-gradient(0deg, transparent, transparent 19px, rgba(93,202,165,0.06) 19px, rgba(93,202,165,0.06) 20px),
       repeating-linear-gradient(90deg, transparent, transparent 19px, rgba(93,202,165,0.06) 19px, rgba(93,202,165,0.06) 20px);
-    animation: gridFade 8s ease-in-out 4s infinite;
+    transition: opacity 1s ease 0.3s;
+  }
+  .moon-stack:hover .moon-grid {
+    opacity: 0.7;
   }
 
-  /* Sweep line — follows mouse */
-  .scan-line {
-    position: absolute;
-    inset: 0;
-    overflow: hidden;
-    border-radius: 50%;
-    opacity: 0;
-    transition: opacity 0.4s ease;
-  }
-  .moon-stack.hovering .scan-line {
-    opacity: 1;
-  }
-  .scan-line::after {
-    content: '';
-    position: absolute;
-    top: 0;
-    left: 0;
-    right: 0;
-    height: 2px;
-    background: linear-gradient(90deg, transparent 0%, rgba(93,202,165,0.5) 30%, rgba(93,202,165,0.9) 50%, rgba(93,202,165,0.5) 70%, transparent 100%);
-    box-shadow: 0 0 12px rgba(93,202,165,0.4), 0 0 30px rgba(93,202,165,0.15);
-    transition: top 0.08s linear;
-  }
 
-  @keyframes topoFade {
-    0%, 15% { opacity: 0; }
-    25%, 50% { opacity: 0.18; }
-    65%, 100% { opacity: 0; }
-  }
-  @keyframes scanFade {
-    0%, 10% { opacity: 0; }
-    20%, 45% { opacity: 0.12; }
-    60%, 100% { opacity: 0; }
-  }
-  @keyframes gridFade {
-    0%, 10% { opacity: 0; }
-    25%, 55% { opacity: 0.7; }
-    70%, 100% { opacity: 0; }
-  }
+
+
 
 
   /* ── mobile tweaks ── */
@@ -324,7 +297,6 @@
   <img src="/moon.png?v=3" alt="" class="moon moon-topo" loading="eager">
   <img src="/moon.png?v=3" alt="" class="moon moon-scan" loading="eager">
   <div class="moon moon-grid"></div>
-  <div class="scan-line"></div>
 </div>
 
 <nav>
@@ -456,33 +428,6 @@
     requestAnimationFrame(loop);
   }
   loop();
-})();
-
-// ── Moon scan line follows mouse ──
-(function () {
-  const stack = document.querySelector('.moon-stack');
-  const line = document.querySelector('.scan-line');
-  if (!stack || !line) return;
-
-  stack.style.pointerEvents = 'auto';
-
-  stack.addEventListener('mouseenter', () => {
-    stack.classList.add('hovering');
-  });
-  stack.addEventListener('mouseleave', () => {
-    stack.classList.remove('hovering');
-  });
-  stack.addEventListener('mousemove', (e) => {
-    const rect = stack.getBoundingClientRect();
-    const y = e.clientY - rect.top;
-    const pct = (y / rect.height) * 100;
-    line.style.setProperty('--scan-y', Math.max(0, Math.min(100, pct)) + '%');
-  });
-
-  // Use CSS custom property for the line position
-  const style = document.createElement('style');
-  style.textContent = '.scan-line::after { top: var(--scan-y, 50%); }';
-  document.head.appendChild(style);
 })();
 
 // ── Scroll fade-in ──
