@@ -212,6 +212,20 @@
     .fade-up { opacity: 1; transform: none; transition: none; }
   }
 
+  /* ── moon ── */
+  .moon {
+    position: fixed;
+    top: -6vw;
+    right: -6vw;
+    width: clamp(220px, 32vw, 420px);
+    height: auto;
+    opacity: 0.12;
+    pointer-events: none;
+    z-index: 1;
+    filter: drop-shadow(0 0 60px rgba(232,239,233,0.08));
+    mix-blend-mode: screen;
+  }
+
   /* ── mobile tweaks ── */
   @media (max-width: 600px) {
     nav { padding: 1rem 1.4rem; }
@@ -220,12 +234,14 @@
     .page { padding: 6.5rem 1.4rem 4rem; }
     .hero { margin-bottom: 3.5rem; padding-bottom: 3rem; }
     .divider { margin: 3rem 0 2.5rem; }
+    .moon { top: -8vw; right: -10vw; width: 180px; opacity: 0.09; }
   }
 </style>
 </head>
 <body>
 <canvas id="cv"></canvas>
 <div class="vignette"></div>
+<img src="/moon.png" alt="" class="moon" loading="eager">
 
 <nav>
   <a href="/" class="wordmark">psilos</a>
