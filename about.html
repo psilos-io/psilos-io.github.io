@@ -212,17 +212,101 @@
     .fade-up { opacity: 1; transform: none; transition: none; }
   }
 
-  /* ── moon ── */
-  .moon {
+  /* ── moon analysis stack ── */
+  .moon-stack {
     position: fixed;
     top: 2rem;
     right: 2rem;
     width: clamp(240px, 30vw, 400px);
-    height: auto;
-    opacity: 0.14;
+    aspect-ratio: 1;
     pointer-events: none;
     z-index: 999;
-    filter: drop-shadow(0 0 40px rgba(232,239,233,0.08));
+  }
+  .moon {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+    pointer-events: none;
+  }
+
+  /* Layer 1: base photograph */
+  .moon-base {
+    opacity: 0.10;
+    filter: drop-shadow(0 0 30px rgba(232,239,233,0.06));
+  }
+
+  /* Layer 2: topographic / false-color analysis */
+  .moon-topo {
+    opacity: 0;
+    filter: hue-rotate(90deg) saturate(3) brightness(1.2) drop-shadow(0 0 20px rgba(29,158,117,0.3));
+    mix-blend-mode: lighten;
+    animation: topoFade 8s ease-in-out infinite;
+  }
+
+  /* Layer 3: high-contrast edge scan */
+  .moon-scan {
+    opacity: 0;
+    filter: hue-rotate(120deg) saturate(5) contrast(2.5) brightness(0.8);
+    mix-blend-mode: screen;
+    animation: scanFade 8s ease-in-out 2.5s infinite;
+  }
+
+  /* Layer 4: grid overlay */
+  .moon-grid {
+    opacity: 0;
+    border-radius: 50%;
+    background:
+      repeating-linear-gradient(0deg, transparent, transparent 19px, rgba(93,202,165,0.06) 19px, rgba(93,202,165,0.06) 20px),
+      repeating-linear-gradient(90deg, transparent, transparent 19px, rgba(93,202,165,0.06) 19px, rgba(93,202,165,0.06) 20px);
+    animation: gridFade 8s ease-in-out 4s infinite;
+  }
+
+  /* Sweep line */
+  .scan-line {
+    position: absolute;
+    inset: 0;
+    overflow: hidden;
+    border-radius: 50%;
+    opacity: 0;
+    animation: scanLineFade 8s ease-in-out 1s infinite;
+  }
+  .scan-line::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 2px;
+    background: linear-gradient(90deg, transparent 0%, rgba(93,202,165,0.5) 30%, rgba(93,202,165,0.9) 50%, rgba(93,202,165,0.5) 70%, transparent 100%);
+    box-shadow: 0 0 12px rgba(93,202,165,0.4), 0 0 30px rgba(93,202,165,0.15);
+    animation: sweepDown 8s linear infinite;
+  }
+
+  @keyframes topoFade {
+    0%, 15% { opacity: 0; }
+    25%, 50% { opacity: 0.18; }
+    65%, 100% { opacity: 0; }
+  }
+  @keyframes scanFade {
+    0%, 10% { opacity: 0; }
+    20%, 45% { opacity: 0.12; }
+    60%, 100% { opacity: 0; }
+  }
+  @keyframes gridFade {
+    0%, 10% { opacity: 0; }
+    25%, 55% { opacity: 0.7; }
+    70%, 100% { opacity: 0; }
+  }
+  @keyframes scanLineFade {
+    0%, 5% { opacity: 0; }
+    12%, 55% { opacity: 1; }
+    65%, 100% { opacity: 0; }
+  }
+  @keyframes sweepDown {
+    0% { top: -2%; }
+    100% { top: 102%; }
   }
 
   /* ── mobile tweaks ── */
@@ -233,14 +317,20 @@
     .page { padding: 6.5rem 1.4rem 4rem; }
     .hero { margin-bottom: 3.5rem; padding-bottom: 3rem; }
     .divider { margin: 3rem 0 2.5rem; }
-    .moon { top: 0.5rem; right: 0.5rem; width: 160px; opacity: 0.3; }
+    .moon-stack { top: 0.5rem; right: 0.5rem; width: 160px; }
   }
 </style>
 </head>
 <body>
 <canvas id="cv"></canvas>
 <div class="vignette"></div>
-<img src="/moon.png?v=2" alt="" class="moon" loading="eager">
+<div class="moon-stack">
+  <img src="/moon.png?v=3" alt="" class="moon moon-base" loading="eager">
+  <img src="/moon.png?v=3" alt="" class="moon moon-topo" loading="eager">
+  <img src="/moon.png?v=3" alt="" class="moon moon-scan" loading="eager">
+  <div class="moon moon-grid"></div>
+  <div class="scan-line"></div>
+</div>
 
 <nav>
   <a href="/" class="wordmark">psilos</a>
