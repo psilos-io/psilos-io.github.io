@@ -222,6 +222,9 @@
     pointer-events: auto;
     cursor: crosshair;
     z-index: 999;
+    /* invisible hit area so hover registers */
+    background: rgba(0,0,0,0.001);
+    border-radius: 50%;
   }
   .moon {
     position: absolute;
@@ -229,7 +232,6 @@
     width: 100%;
     height: 100%;
     object-fit: contain;
-    pointer-events: none;
   }
 
   /* Layer 1: base photograph */
